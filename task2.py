@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileDialog
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileDialog, QLineEdit
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from about_window import AboutWindow
@@ -12,6 +12,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.temperatures = []
         self.revenues = []
+        self.coefficients = []
         self.about_window = AboutWindow()
         self.initUI()
 
@@ -37,6 +38,16 @@ class MainWindow(QWidget):
 
         self.toolbar = NavigationToolbar2QT(self.canvas, self)
         self.toolbar.setGeometry(30, 120, 640, 35)
+
+        self.predict_label = QLabel("Temperature [°C]:", self)
+        self.predict_label.setGeometry(30, 475, 140, 35)
+
+        self.predict_input = QLineEdit("", self)
+        self.predict_input.setGeometry(170, 475, 80, 35)
+        self.predict_input.returnPressed.connect(self.predict_entered)
+
+        self.prediction_label = QLabel("", self)
+        self.prediction_label.setGeometry(265, 475, 250, 35)
 
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(530, 475, 140, 35)
@@ -64,6 +75,7 @@ class MainWindow(QWidget):
         ax.scatter(self.temperatures, self.revenues, s=1, label="Data")
 
         coefficients = np.polyfit(self.temperatures, self.revenues, 1)
+        self.coefficients = coefficients
         line_function = np.poly1d(coefficients)
         line_x = np.linspace(min(self.temperatures), max(self.temperatures), 100)
         line_y = line_function(line_x)
@@ -78,6 +90,16 @@ class MainWindow(QWidget):
         ax.legend()
         self.figure.tight_layout()
         self.canvas.draw()
+
+    def predict_entered(self):
+        if len(self.coefficients) == 0:
+            return
+        temperature = float(self.predict_input.text())
+        if temperature < min(self.temperatures) or temperature > max(self.temperatures):
+            self.prediction_label.setText(f"Enter {min(self.temperatures):.0f} to {max(self.temperatures):.0f} °C")
+            return
+        revenue = self.coefficients[0] * temperature + self.coefficients[1]
+        self.prediction_label.setText(f"Predicted revenue: ${revenue:.2f}")
 
     def about_clicked(self):
         self.about_window.show()

@@ -1,0 +1,36 @@
+Bonus features - Exercise 4
+
+Task 1 (Grades):
+- Average before and after the bonus is shown next to the bonus field (for example, with a bonus of 7: Average: 84.0 -> 90.3).
+- Alternating row colors in the table for easier reading.
+- The selected file name is shown next to the Load File button.
+- No crash when the file dialog is closed without choosing a file, or when Update File is clicked before loading a file.
+
+Task 2 (Ice Cream):
+- Revenue prediction: type a temperature and press ENTER to get the predicted revenue from the trend line equation. Only temperatures inside the data range (0 to 45 °C) are accepted.
+- A legend explaining the data points and the trend line.
+- Units on the axes (°C and $).
+- The selected file name is shown next to the Load File button.
+
+General:
+- Buttons change color when the mouse is over them (hover effect in the qss file).
+- One shared qss style file and one shared About window for both tasks.
+
+
+בונוסים - תרגיל 4
+
+שאלה 1 (ציונים):
+- הצגת הממוצע לפני ואחרי הבונוס ליד שדה הבונוס (לדוגמה, עם בונוס 7: Average: 84.0 -> 90.3).
+- צבעי שורות מתחלפים בטבלה לקריאה נוחה יותר.
+- שם הקובץ שנבחר מוצג ליד כפתור Load File.
+- התוכנה לא קורסת אם סוגרים את חלון בחירת הקובץ בלי לבחור, או אם לוחצים Update File לפני שנטען קובץ.
+
+שאלה 2 (גלידה):
+- חיזוי רווח: מקלידים טמפרטורה ולוחצים ENTER, ומקבלים את הרווח הצפוי לפי משוואת קו המגמה. מתקבלות רק טמפרטורות בטווח של הנתונים (0 עד 45 מעלות).
+- מקרא (legend) שמסביר מה הן הנקודות ומה הקו.
+- יחידות על הצירים (°C ו-$).
+- שם הקובץ שנבחר מוצג ליד כפתור Load File.
+
+כללי:
+- הכפתורים משנים צבע כשהעכבר עליהם (אפקט hover בקובץ ה-qss).
+- קובץ qss אחד וחלון About אחד משותפים לשתי השאלות.

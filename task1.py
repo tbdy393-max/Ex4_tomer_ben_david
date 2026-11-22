@@ -37,6 +37,9 @@ class MainWindow(QWidget):
         self.bonus_input.setGeometry(190, 135, 100, 35)
         self.bonus_input.returnPressed.connect(self.bonus_entered)
 
+        self.average_label = QLabel("", self)
+        self.average_label.setGeometry(310, 135, 220, 35)
+
         self.table = QTableWidget(50, 3, self)
         self.table.setGeometry(30, 190, 500, 260)
         self.table.setHorizontalHeaderLabels(["ID", "Original Grades", "Corrected Grades"])
@@ -76,6 +79,9 @@ class MainWindow(QWidget):
             self.table.setItem(row, 0, QTableWidgetItem(self.student_ids[row]))
             self.table.setItem(row, 1, QTableWidgetItem(str(self.original_grades[row])))
             self.table.setItem(row, 2, QTableWidgetItem(str(self.corrected_grades[row])))
+        original_average = sum(self.original_grades) / len(self.original_grades)
+        corrected_average = sum(self.corrected_grades) / len(self.corrected_grades)
+        self.average_label.setText(f"Average: {original_average:.1f} → {corrected_average:.1f}")
     
     def bonus_entered(self):
         bonus = int(self.bonus_input.text())

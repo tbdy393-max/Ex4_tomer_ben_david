@@ -55,6 +55,18 @@ class MainWindow(QWidget):
             return
         self.selected_file = file_name
         self.file_label.setText(os.path.basename(file_name))
+        self.student_ids = []
+        self.original_grades = []
+        self.corrected_grades = []
+        with open(self.selected_file, "r") as f:
+            next(f)
+            for line in f:
+                student_id, grade = line.strip().split(",")
+                self.student_ids.append(student_id)
+                self.original_grades.append(int(grade))
+                self.corrected_grades.append(int(grade))
+        print(self.student_ids)
+        print(self.original_grades)
 
 
 

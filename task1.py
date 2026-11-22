@@ -65,10 +65,12 @@ class MainWindow(QWidget):
                 self.student_ids.append(student_id)
                 self.original_grades.append(int(grade))
                 self.corrected_grades.append(int(grade))
-        print(self.student_ids)
-        print(self.original_grades)
-
-
+        self.update_table()
+    def update_table(self):
+        for row in range(len(self.student_ids)):
+            self.table.setItem(row, 0, QTableWidgetItem(self.student_ids[row]))
+            self.table.setItem(row, 1, QTableWidgetItem(str(self.original_grades[row])))
+            self.table.setItem(row, 2, QTableWidgetItem(str(self.corrected_grades[row])))
 
 if __name__ == "__main__":
     app = QApplication()

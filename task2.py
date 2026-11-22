@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileD
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 import os
+import numpy as np
 
 
 class MainWindow(QWidget):
@@ -57,12 +58,21 @@ class MainWindow(QWidget):
     def draw_graph(self):
         self.figure.clear()
         ax = self.figure.add_subplot(1, 1, 1)
-        ax.scatter(self.temperatures, self.revenues, s=1)
+        ax.scatter(self.temperatures, self.revenues, s=1, label="Data")
+
+        coefficients = np.polyfit(self.temperatures, self.revenues, 1)
+        line_function = np.poly1d(coefficients)
+        line_x = np.linspace(min(self.temperatures), max(self.temperatures), 100)
+        line_y = line_function(line_x)
+        ax.plot(line_x, line_y, color="red", label="Trend Line")
+        ax.text(min(self.temperatures), max(self.revenues), f"y = {coefficients[0]:.2f}x + {coefficients[1]:.2f}", color="red")
+
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.set_title("Ice Cream Revenue vs. Temperature")
         ax.set_xlabel("Temperature [°C]")
         ax.set_ylabel("Revenue [$]")
+        ax.legend()
         self.figure.tight_layout()
         self.canvas.draw()
 

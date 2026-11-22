@@ -16,7 +16,7 @@ class MainWindow(QWidget):
 
     def initUI(self):
         self.setWindowTitle("Grades Correction")
-        self.setGeometry(100, 100, 560, 640)
+        self.setGeometry(100, 50, 560, 530)
 
         self.title = QLabel("Grades Correction", self)
         self.title.setObjectName("title")
@@ -37,7 +37,7 @@ class MainWindow(QWidget):
         self.bonus_input.returnPressed.connect(self.bonus_entered)
 
         self.table = QTableWidget(50, 3, self)
-        self.table.setGeometry(30, 190, 500, 360)
+        self.table.setGeometry(30, 190, 500, 260)
         self.table.setHorizontalHeaderLabels(["ID", "Original Grades", "Corrected Grades"])
         self.table.setColumnWidth(0, 140)
         self.table.setColumnWidth(1, 145)
@@ -45,11 +45,11 @@ class MainWindow(QWidget):
         self.table.setAlternatingRowColors(True)
 
         self.update_button = QPushButton("Update File", self)
-        self.update_button.setGeometry(30, 575, 140, 35)
+        self.update_button.setGeometry(30, 470, 140, 35)
         self.update_button.clicked.connect(self.update_clicked)
 
         self.about_button = QPushButton("About", self)
-        self.about_button.setGeometry(390, 575, 140, 35)
+        self.about_button.setGeometry(390, 470, 140, 35)
 
     def load_clicked(self):
         file_name = QFileDialog.getOpenFileName(self, "Select grades file", "", "CSV files (*.csv)")[0]

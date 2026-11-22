@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileDialog
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+import os
 
 
 class MainWindow(QWidget):
@@ -21,6 +22,7 @@ class MainWindow(QWidget):
 
         self.load_button = QPushButton("Load File", self)
         self.load_button.setGeometry(30, 75, 140, 35)
+        self.load_button.clicked.connect(self.load_clicked)
 
         self.file_label = QLabel("No file selected", self)
         self.file_label.setGeometry(190, 75, 480, 35)

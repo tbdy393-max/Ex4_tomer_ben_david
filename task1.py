@@ -2,7 +2,7 @@ import os
 import sys
 import subprocess
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit, QTableWidget, QTableWidgetItem, QFileDialog
-
+from about_window import AboutWindow
 
 class MainWindow(QWidget):
 
@@ -12,6 +12,7 @@ class MainWindow(QWidget):
         self.original_grades = []
         self.corrected_grades = []
         self.selected_file = ""
+        self.about_window = AboutWindow()
         self.initUI()
 
     def initUI(self):
@@ -50,6 +51,7 @@ class MainWindow(QWidget):
 
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(390, 470, 140, 35)
+        self.about_button.clicked.connect(self.about_clicked)
 
     def load_clicked(self):
         file_name = QFileDialog.getOpenFileName(self, "Select grades file", "", "CSV files (*.csv)")[0]
@@ -99,21 +101,8 @@ class MainWindow(QWidget):
         else:
             subprocess.call(["xdg-open", self.selected_file])
 
-    def update_clicked(self):
-        with open(self.selected_file, "w") as f:
-            f.write("ID,Grade\n")
-            for i in range(len(self.student_ids)):
-                f.write(f"{self.student_ids[i]},{self.corrected_grades[i]}\n")
-        self.open_file()
-
-    def open_file(self):
-        if sys.platform == "win32":
-            os.startfile(self.selected_file)
-        elif sys.platform == "darwin":
-            subprocess.call(["open", self.selected_file])
-        else:
-            subprocess.call(["xdg-open", self.selected_file])
-           
+    def about_clicked(self):
+        self.about_window.show()       
 
 if __name__ == "__main__":
     app = QApplication()

@@ -74,6 +74,7 @@ class MainWindow(QWidget):
             self.table.setItem(row, 0, QTableWidgetItem(self.student_ids[row]))
             self.table.setItem(row, 1, QTableWidgetItem(str(self.original_grades[row])))
             self.table.setItem(row, 2, QTableWidgetItem(str(self.corrected_grades[row])))
+    
     def bonus_entered(self):
         bonus = int(self.bonus_input.text())
         for i in range(len(self.original_grades)):
@@ -82,6 +83,22 @@ class MainWindow(QWidget):
                 new_grade = 100
             self.corrected_grades[i] = new_grade
         self.update_table()
+   
+    def update_clicked(self):
+        with open(self.selected_file, "w") as f:
+            f.write("ID,Grade\n")
+            for i in range(len(self.student_ids)):
+                f.write(f"{self.student_ids[i]},{self.corrected_grades[i]}\n")
+        self.open_file()
+
+    def open_file(self):
+        if sys.platform == "win32":
+            os.startfile(self.selected_file)
+        elif sys.platform == "darwin":
+            subprocess.call(["open", self.selected_file])
+        else:
+            subprocess.call(["xdg-open", self.selected_file])
+
     def update_clicked(self):
         with open(self.selected_file, "w") as f:
             f.write("ID,Grade\n")

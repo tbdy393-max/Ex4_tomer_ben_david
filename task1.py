@@ -46,6 +46,7 @@ class MainWindow(QWidget):
 
         self.update_button = QPushButton("Update File", self)
         self.update_button.setGeometry(30, 575, 140, 35)
+        self.update_button.clicked.connect(self.update_clicked)
 
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(390, 575, 140, 35)
@@ -67,7 +68,7 @@ class MainWindow(QWidget):
                 self.original_grades.append(int(grade))
                 self.corrected_grades.append(int(grade))
         self.update_table()
-        
+
     def update_table(self):
         for row in range(len(self.student_ids)):
             self.table.setItem(row, 0, QTableWidgetItem(self.student_ids[row]))
@@ -80,7 +81,22 @@ class MainWindow(QWidget):
             if new_grade > 100:
                 new_grade = 100
             self.corrected_grades[i] = new_grade
-        self.update_table()            
+        self.update_table()
+    def update_clicked(self):
+        with open(self.selected_file, "w") as f:
+            f.write("ID,Grade\n")
+            for i in range(len(self.student_ids)):
+                f.write(f"{self.student_ids[i]},{self.corrected_grades[i]}\n")
+        self.open_file()
+
+    def open_file(self):
+        if sys.platform == "win32":
+            os.startfile(self.selected_file)
+        elif sys.platform == "darwin":
+            subprocess.call(["open", self.selected_file])
+        else:
+            subprocess.call(["xdg-open", self.selected_file])
+           
 
 if __name__ == "__main__":
     app = QApplication()

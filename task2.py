@@ -38,12 +38,32 @@ class MainWindow(QWidget):
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(530, 475, 140, 35)
 
+    def load_clicked(self):
+        file_name = QFileDialog.getOpenFileName(self, "Select ice cream file", "", "CSV files (*.csv)")[0]
+        if file_name == "":
+            return
+        self.file_label.setText(os.path.basename(file_name))
+        self.temperatures = []
+        self.revenues = []
+        with open(file_name, "r") as f:
+            next(f)
+            for line in f:
+                temperature, revenue = line.strip().split(",")
+                self.temperatures.append(float(temperature))
+                self.revenues.append(int(revenue))
         self.draw_graph()
+       
 
     def draw_graph(self):
         self.figure.clear()
         ax = self.figure.add_subplot(1, 1, 1)
-        ax.plot([1, 2, 3, 4], [1, 4, 9, 16])
+        ax.scatter(self.temperatures, self.revenues, s=1)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.set_title("Ice Cream Revenue vs. Temperature")
+        ax.set_xlabel("Temperature [°C]")
+        ax.set_ylabel("Revenue [$]")
+        self.figure.tight_layout()
         self.canvas.draw()
 
 

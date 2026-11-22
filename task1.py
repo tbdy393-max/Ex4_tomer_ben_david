@@ -87,6 +87,8 @@ class MainWindow(QWidget):
         self.update_table()
    
     def update_clicked(self):
+        if self.selected_file == "":
+            return
         with open(self.selected_file, "w") as f:
             f.write("ID,Grade\n")
             for i in range(len(self.student_ids)):

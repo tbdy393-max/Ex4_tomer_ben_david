@@ -15,7 +15,7 @@ class AboutWindow(QWidget):
         self.name_label.setObjectName("title")
         self.name_label.setGeometry(30, 20, 360, 40)
 
-        self.info_label = QLabel("Grades correction app - Exercise 4", self)
+        self.info_label = QLabel("Exercise 4 - Files and Graphs", self)
         self.info_label.setGeometry(30, 75, 360, 30)
 
         self.link_label = QLabel('<a href="https://github.com/tbdy393-max/Ex4_tomer_ben_david">GitHub repository</a>', self)

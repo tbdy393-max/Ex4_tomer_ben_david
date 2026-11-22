@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileDialog
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+from about_window import AboutWindow
 import os
 import numpy as np
 
@@ -11,6 +12,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.temperatures = []
         self.revenues = []
+        self.about_window = AboutWindow()
         self.initUI()
 
     def initUI(self):
@@ -38,6 +40,7 @@ class MainWindow(QWidget):
 
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(530, 475, 140, 35)
+        self.about_button.clicked.connect(self.about_clicked)
 
     def load_clicked(self):
         file_name = QFileDialog.getOpenFileName(self, "Select ice cream file", "", "CSV files (*.csv)")[0]
@@ -75,6 +78,9 @@ class MainWindow(QWidget):
         ax.legend()
         self.figure.tight_layout()
         self.canvas.draw()
+
+    def about_clicked(self):
+        self.about_window.show()
 
 
 if __name__ == "__main__":

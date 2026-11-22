@@ -24,6 +24,7 @@ class MainWindow(QWidget):
 
         self.load_button = QPushButton("Load File", self)
         self.load_button.setGeometry(30, 80, 140, 35)
+        self.load_button.clicked.connect(self.load_clicked)
 
         self.file_label = QLabel("No file selected", self)
         self.file_label.setGeometry(190, 80, 340, 35)
@@ -46,6 +47,14 @@ class MainWindow(QWidget):
 
         self.about_button = QPushButton("About", self)
         self.about_button.setGeometry(390, 575, 140, 35)
+
+    def load_clicked(self):
+        file_name = QFileDialog.getOpenFileName(self, "Select grades file", "", "CSV files (*.csv)")[0]
+        if file_name == "":
+            return
+        self.selected_file = file_name
+        self.file_label.setText(os.path.basename(file_name))
+
 
 
 if __name__ == "__main__":

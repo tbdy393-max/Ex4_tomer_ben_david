@@ -41,6 +41,7 @@ class MainWindow(QWidget):
         self.table.setColumnWidth(0, 140)
         self.table.setColumnWidth(1, 145)
         self.table.setColumnWidth(2, 145)
+        self.table.setAlternatingRowColors(True)
 
         self.update_button = QPushButton("Update File", self)
         self.update_button.setGeometry(30, 575, 140, 35)

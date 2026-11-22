@@ -34,6 +34,7 @@ class MainWindow(QWidget):
 
         self.bonus_input = QLineEdit("0", self)
         self.bonus_input.setGeometry(190, 135, 100, 35)
+        self.bonus_input.returnPressed.connect(self.bonus_entered)
 
         self.table = QTableWidget(50, 3, self)
         self.table.setGeometry(30, 190, 500, 360)
@@ -66,11 +67,20 @@ class MainWindow(QWidget):
                 self.original_grades.append(int(grade))
                 self.corrected_grades.append(int(grade))
         self.update_table()
+        
     def update_table(self):
         for row in range(len(self.student_ids)):
             self.table.setItem(row, 0, QTableWidgetItem(self.student_ids[row]))
             self.table.setItem(row, 1, QTableWidgetItem(str(self.original_grades[row])))
             self.table.setItem(row, 2, QTableWidgetItem(str(self.corrected_grades[row])))
+    def bonus_entered(self):
+        bonus = int(self.bonus_input.text())
+        for i in range(len(self.original_grades)):
+            new_grade = self.original_grades[i] + bonus
+            if new_grade > 100:
+                new_grade = 100
+            self.corrected_grades[i] = new_grade
+        self.update_table()            
 
 if __name__ == "__main__":
     app = QApplication()
